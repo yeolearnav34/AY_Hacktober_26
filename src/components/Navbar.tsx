@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { LanguageSelector } from './LanguageSelector';
 import { 
   Sprout, 
@@ -13,7 +14,9 @@ import {
   X,
   Sparkles,
   Megaphone,
-  XCircle
+  XCircle,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -23,6 +26,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => {
   const { t } = useLanguage();
+  const { theme, toggleTheme, isDark } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnnouncement, setShowAnnouncement] = useState(true);
 
@@ -63,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
         </div>
       )}
 
-    <header className="sticky top-0 z-40 w-full border-b border-forest-100 bg-cream/95 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-40 w-full border-b border-forest-100 dark:border-forest-900 bg-cream/95 dark:bg-[#0f1a12]/95 backdrop-blur-md transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-20 items-center justify-between">
           
@@ -82,14 +86,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-bold text-lg sm:text-xl tracking-tight text-forest-950">
-                  CropCare <span className="text-forest-600 font-extrabold">AI</span>
+                <span className="font-bold text-lg sm:text-xl tracking-tight text-forest-950 dark:text-emerald-100">
+                  CropCare <span className="text-forest-600 dark:text-emerald-400 font-extrabold">AI</span>
                 </span>
-                <span className="hidden sm:inline-flex items-center rounded-full bg-harvest-100 px-2 py-0.5 text-[10px] font-semibold text-harvest-800 border border-harvest-200">
-                  <Sparkles className="w-2.5 h-2.5 mr-0.5 text-harvest-600" /> Free for Farmers
+                <span className="hidden sm:inline-flex items-center rounded-full bg-harvest-100 dark:bg-harvest-900/40 px-2 py-0.5 text-[10px] font-semibold text-harvest-800 dark:text-harvest-300 border border-harvest-200 dark:border-harvest-700">
+                  <Sparkles className="w-2.5 h-2.5 mr-0.5 text-harvest-600 dark:text-harvest-400" /> Free for Farmers
                 </span>
               </div>
-              <p className="text-[11px] sm:text-xs text-stone-600 font-medium tracking-tight -mt-0.5 hidden xs:block">
+              <p className="text-[11px] sm:text-xs text-stone-600 dark:text-stone-400 font-medium tracking-tight -mt-0.5 hidden xs:block">
                 {t.tagline}
               </p>
             </div>
@@ -124,19 +128,51 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
                   onClick={() => handleNavClick(item.id)}
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 xl:px-3.5 py-1.5 text-xs xl:text-sm font-medium transition ${
                     isActive
-                      ? 'bg-forest-100 text-forest-950 font-semibold'
-                      : 'text-stone-700 hover:bg-forest-50 hover:text-forest-900'
+                      ? 'bg-forest-100 dark:bg-forest-900/60 text-forest-950 dark:text-emerald-200 font-semibold'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-forest-50 dark:hover:bg-forest-900/40 hover:text-forest-900 dark:hover:text-emerald-200'
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? 'text-forest-700' : 'text-stone-500'}`} />
+                  <Icon className={`h-4 w-4 ${isActive ? 'text-forest-700 dark:text-emerald-400' : 'text-stone-500 dark:text-stone-400'}`} />
                   <span>{item.label}</span>
                 </button>
               );
             })}
           </nav>
 
-          {/* Right side controls: Language switcher & Mobile Menu toggle */}
+          {/* Right side controls: Theme toggle, Language switcher & Mobile Menu toggle */}
           <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Theme Toggle Button */}
+            <button
+              id="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              className={`
+                relative inline-flex items-center justify-center w-10 h-10 rounded-full
+                border transition-all duration-300 group
+                ${isDark
+                  ? 'bg-indigo-950 border-indigo-700 hover:bg-indigo-900 hover:border-indigo-500 shadow-[0_0_12px_rgba(99,102,241,0.4)]'
+                  : 'bg-amber-50 border-amber-200 hover:bg-amber-100 hover:border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.3)]'
+                }
+              `}
+            >
+              {/* Sun icon for light mode */}
+              <Sun
+                className={`
+                  absolute h-4 w-4 text-amber-500 transition-all duration-500
+                  ${isDark ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}
+                `}
+              />
+              {/* Moon icon for dark mode */}
+              <Moon
+                className={`
+                  absolute h-4 w-4 text-indigo-300 transition-all duration-500
+                  ${isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}
+                `}
+              />
+            </button>
+
             <LanguageSelector />
 
             {/* Mobile Detect Button shortcut */}
@@ -152,7 +188,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden inline-flex items-center justify-center rounded-xl p-2 text-forest-900 hover:bg-forest-100 focus:outline-none focus:ring-2 focus:ring-forest-500"
+              className="lg:hidden inline-flex items-center justify-center rounded-xl p-2 text-forest-900 dark:text-emerald-300 hover:bg-forest-100 dark:hover:bg-forest-900/50 focus:outline-none focus:ring-2 focus:ring-forest-500"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -163,7 +199,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-forest-100 bg-white/95 px-4 pt-3 pb-6 shadow-lifted animate-in slide-in-from-top-4 duration-200">
+        <div className="lg:hidden border-b border-forest-100 dark:border-forest-800 bg-white/95 dark:bg-[#0f1a12]/98 px-4 pt-3 pb-6 shadow-lifted animate-in slide-in-from-top-4 duration-200">
           <div className="flex flex-col gap-1.5">
             {navLinks.map((item) => {
               const Icon = item.icon;
@@ -176,12 +212,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
                     isActive
                       ? 'bg-forest-900 text-white font-semibold shadow-sm'
                       : item.highlight
-                      ? 'bg-harvest-100 text-harvest-950 font-semibold'
-                      : 'text-stone-700 hover:bg-forest-50 hover:text-forest-900'
+                      ? 'bg-harvest-100 dark:bg-harvest-900/30 text-harvest-950 dark:text-harvest-200 font-semibold'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-forest-50 dark:hover:bg-forest-900/40 hover:text-forest-900 dark:hover:text-emerald-200'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-emerald-400' : 'text-forest-700'}`} />
+                    <Icon className={`h-5 w-5 ${isActive ? 'text-emerald-400' : 'text-forest-700 dark:text-emerald-500'}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.highlight && !isActive && (
@@ -195,11 +231,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
           </div>
 
           {/* Quick Helpline inside Mobile Drawer */}
-          <div className="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between px-2 text-xs text-stone-600">
+          <div className="mt-4 pt-4 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between px-2 text-xs text-stone-600 dark:text-stone-400">
             <span className="flex items-center gap-1.5">
-              <PhoneCall className="w-3.5 h-3.5 text-forest-700" /> Kisan Helpline: <strong>1800-180-1551</strong>
+              <PhoneCall className="w-3.5 h-3.5 text-forest-700 dark:text-emerald-500" /> Kisan Helpline: <strong>1800-180-1551</strong>
             </span>
-            <span className="text-[11px] text-forest-700 font-semibold">Toll-Free 24x7</span>
+            <span className="text-[11px] text-forest-700 dark:text-emerald-400 font-semibold">Toll-Free 24x7</span>
           </div>
         </div>
       )}

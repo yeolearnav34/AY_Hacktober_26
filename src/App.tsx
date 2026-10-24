@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomeHero } from './components/HomeHero';
@@ -97,7 +98,7 @@ const MainApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-cream text-stone-800 font-sans selection:bg-forest-100 selection:text-forest-900">
+    <div className="min-h-screen flex flex-col bg-cream dark:bg-[#0f1a12] text-stone-800 dark:text-emerald-50 font-sans selection:bg-forest-100 selection:text-forest-900 dark:selection:bg-forest-900 dark:selection:text-emerald-100">
       
       {/* Sticky Top Navigation */}
       <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
@@ -205,9 +206,11 @@ const MainApp: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <LanguageProvider>
-      <MainApp />
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <MainApp />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 };
 

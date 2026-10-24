@@ -11,6 +11,13 @@
   body {
     background-color: #faf6ee;
     color: #27201e;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Dark mode body */
+  html.dark body {
+    background-color: #0f1a12;
+    color: #e8f5e9;
   }
 }
 
@@ -31,6 +38,31 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #2d6a4f;
+}
+
+/* Dark mode scrollbar */
+html.dark ::-webkit-scrollbar-track {
+  background: #1a2e1d;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2d6a4f;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4ade80;
+}
+
+/* Theme transition for all elements */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* But don't apply transitions to animations */
+.animate-ping, .animate-spin, [class*="animate-"] {
+  transition: none !important;
 }
 
 /* Subtle shimmer effect for hero background */
