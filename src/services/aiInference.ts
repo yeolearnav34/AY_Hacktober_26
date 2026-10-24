@@ -1,6 +1,7 @@
 import { CropScanResult, PathogenType } from '../types';
 import { supabase, isSupabaseConfigured } from './supabaseClient';
 import { cropKnowledgeBase } from '../data/cropKnowledge';
+import { predictWithModelApi } from './modelApi';
 
 const HF_API_KEY = import.meta.env.VITE_HUGGINGFACE_API_KEY as string | undefined;
 const HF_MODEL = import.meta.env.VITE_HF_MODEL || 'linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification';
@@ -101,6 +102,13 @@ export const analyzeCropLeaf = async (
       reader.onerror = reject;
       reader.readAsDataURL(imageFileOrDataUrl);
     });
+  }
+
+  // 0. Our own trained model (model-api/). Skipped for the built-in demo samples,
+  // which show crops (tomato, rice, ...) this model was not trained on.
+  if (!sampleHintId) {
+    const modelResult = await predictWithModelApi(dataUrl);
+    if (modelResult) return modelResult;
   }
 
   // 1. Try Supabase Edge Function if backend is available

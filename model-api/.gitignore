@@ -1,0 +1,3 @@
+# Weights are large; host them on the Hugging Face Space, not in the website repo
+*.pth
+__pycache__/
