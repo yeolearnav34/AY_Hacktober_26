@@ -11,7 +11,9 @@ import {
   PhoneCall, 
   Menu, 
   X,
-  Sparkles
+  Sparkles,
+  Megaphone,
+  XCircle
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -22,6 +24,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => {
   const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAnnouncement, setShowAnnouncement] = useState(true);
 
   const navLinks = [
     { id: 'home', label: t.nav.home, icon: Sprout },
@@ -40,6 +43,26 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
   };
 
   return (
+    <>
+      {/* Announcement Banner */}
+      {showAnnouncement && (
+        <div className="relative bg-gradient-to-r from-forest-900 via-forest-800 to-emerald-900 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium animate-slide-down z-50">
+          <div className="max-w-7xl mx-auto flex items-center justify-center gap-2">
+            <Megaphone className="w-3.5 h-3.5 text-harvest-400 shrink-0" />
+            <span>
+              🌾 <strong>Hacktoberfest 2026:</strong> CropCare AI now supports <strong>10+ crops</strong> with real-time disease detection!
+            </span>
+            <button
+              onClick={() => setShowAnnouncement(false)}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 transition"
+              aria-label="Dismiss announcement"
+            >
+              <XCircle className="w-4 h-4 text-stone-300 hover:text-white" />
+            </button>
+          </div>
+        </div>
+      )}
+
     <header className="sticky top-0 z-40 w-full border-b border-forest-100 bg-cream/95 backdrop-blur-md transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-20 items-center justify-between">
@@ -181,5 +204,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
         </div>
       )}
     </header>
+    </>
   );
 };

@@ -10,7 +10,9 @@ import {
   RefreshCcw, 
   AlertCircle, 
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Shield,
+  Leaf
 } from 'lucide-react';
 
 interface ImageUploaderProps {
@@ -217,6 +219,22 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 <Camera className="h-4 w-4 text-forest-700" />
                 <span>{t.detect.takePhoto}</span>
               </button>
+            </div>
+
+            {/* Photo Tips */}
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
+              <div className="flex items-center gap-2 text-xs text-stone-500 bg-stone-50 rounded-xl px-3 py-2 border border-stone-100">
+                <Leaf className="w-3.5 h-3.5 text-forest-600 shrink-0" />
+                <span>Focus on the affected leaf</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-stone-500 bg-stone-50 rounded-xl px-3 py-2 border border-stone-100">
+                <Sparkles className="w-3.5 h-3.5 text-harvest-500 shrink-0" />
+                <span>Use good natural lighting</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-stone-500 bg-stone-50 rounded-xl px-3 py-2 border border-stone-100">
+                <Shield className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>Photos stay on your device</span>
+              </div>
             </div>
           </div>
         )}

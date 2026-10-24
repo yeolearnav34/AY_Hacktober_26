@@ -33,6 +33,91 @@
   background: #2d6a4f;
 }
 
+/* Subtle shimmer effect for hero background */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(74, 222, 128, 0.04) 25%,
+    rgba(250, 204, 21, 0.06) 50%,
+    rgba(74, 222, 128, 0.04) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+/* Smooth entrance animation for sections */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.6s ease-out both;
+}
+
+.animate-fade-slide-up-delay-1 {
+  animation: fadeSlideUp 0.6s ease-out 0.15s both;
+}
+
+.animate-fade-slide-up-delay-2 {
+  animation: fadeSlideUp 0.6s ease-out 0.3s both;
+}
+
+.animate-fade-slide-up-delay-3 {
+  animation: fadeSlideUp 0.6s ease-out 0.45s both;
+}
+
+/* Glow effect for CTA buttons */
+@keyframes ctaGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(20, 56, 30, 0.06);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5), 0 4px 20px rgba(20, 56, 30, 0.1);
+  }
+}
+
+.cta-glow {
+  animation: ctaGlow 3s ease-in-out infinite;
+}
+
+/* Gradient text utility */
+.gradient-text-green {
+  background: linear-gradient(135deg, #15803d 0%, #059669 50%, #14532d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Announcement bar slide in */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s ease-out both;
+}
+
 /* Printable report styles */
 @media print {
   body {

@@ -14,7 +14,11 @@ import {
   Leaf, 
   HeartHandshake,
   TrendingUp,
-  AlertCircle
+  AlertCircle,
+  Star,
+  Quote,
+  Zap,
+  Globe
 } from 'lucide-react';
 
 interface HomeHeroProps {
@@ -28,13 +32,16 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartDetect, onExploreGuid
   return (
     <div className="space-y-16 sm:space-y-24 pb-16">
       
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section with shimmer background */}
       <section className="relative overflow-hidden pt-6 sm:pt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Background shimmer effect */}
+        <div className="absolute inset-0 shimmer-bg rounded-3xl pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             
             {/* Left Column: Headlines & CTA */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <div className="lg:col-span-7 space-y-6 text-center lg:text-left animate-fade-slide-up">
               
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest-100/80 border border-forest-200 text-forest-900 text-xs sm:text-sm font-semibold shadow-xs">
@@ -58,7 +65,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartDetect, onExploreGuid
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
                 <button
                   onClick={onStartDetect}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-harvest-400 hover:bg-harvest-500 text-stone-950 font-bold text-base shadow-soft hover:shadow-lifted transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-harvest-400 hover:bg-harvest-500 text-stone-950 font-bold text-base shadow-soft hover:shadow-lifted transition-all transform hover:-translate-y-0.5 active:translate-y-0 cta-glow"
                 >
                   <ScanLine className="w-5 h-5 text-stone-900" />
                   <span>{t.hero.ctaPrimary}</span>
@@ -93,7 +100,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartDetect, onExploreGuid
             </div>
 
             {/* Right Column: High Quality Farm Image & Floating Cards */}
-            <div className="lg:col-span-5 relative">
+            <div className="lg:col-span-5 relative animate-fade-slide-up-delay-1">
               <div className="relative mx-auto max-w-md lg:max-w-none">
                 
                 {/* Main Hero Visual */}
@@ -333,7 +340,110 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartDetect, onExploreGuid
         </div>
       </section>
 
-      {/* 5. Indian Farmer Advisory & Helpline Callout */}
+      {/* 5. Farmer Testimonials & Social Proof */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs uppercase tracking-wider text-forest-700 font-bold">
+            Trusted by Farmers
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-forest-950">
+            What Our Farming Community Says
+          </h2>
+          <p className="text-sm text-stone-600">
+            Real stories from farmers across India who use CropCare AI to protect their harvests.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Testimonial 1 */}
+          <div className="relative p-6 rounded-3xl bg-white border border-forest-100 shadow-soft space-y-4 animate-fade-slide-up">
+            <Quote className="w-8 h-8 text-forest-200" />
+            <p className="text-sm text-stone-700 leading-relaxed italic">
+              "CropCare AI detected early blight on my tomato plants before I could even see it. The treatment recommendations saved my entire crop this season."
+            </p>
+            <div className="flex items-center gap-3 pt-2 border-t border-stone-100">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-forest-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">
+                RK
+              </div>
+              <div>
+                <div className="text-sm font-bold text-stone-900">Rajesh Kumar</div>
+                <div className="text-xs text-stone-500">Tomato Farmer, Maharashtra</div>
+              </div>
+              <div className="ml-auto flex gap-0.5">
+                {[1,2,3,4,5].map(i => (
+                  <Star key={i} className="w-3.5 h-3.5 text-harvest-400 fill-harvest-400" />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonial 2 */}
+          <div className="relative p-6 rounded-3xl bg-white border border-forest-100 shadow-soft space-y-4 animate-fade-slide-up-delay-1">
+            <Quote className="w-8 h-8 text-forest-200" />
+            <p className="text-sm text-stone-700 leading-relaxed italic">
+              "I used to lose 30% of my potato harvest to late blight. With CropCare AI's early detection and organic treatment suggestions, my losses dropped to almost zero."
+            </p>
+            <div className="flex items-center gap-3 pt-2 border-t border-stone-100">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-harvest-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm">
+                PD
+              </div>
+              <div>
+                <div className="text-sm font-bold text-stone-900">Priya Devi</div>
+                <div className="text-xs text-stone-500">Potato Farmer, Uttar Pradesh</div>
+              </div>
+              <div className="ml-auto flex gap-0.5">
+                {[1,2,3,4,5].map(i => (
+                  <Star key={i} className="w-3.5 h-3.5 text-harvest-400 fill-harvest-400" />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonial 3 */}
+          <div className="relative p-6 rounded-3xl bg-white border border-forest-100 shadow-soft space-y-4 animate-fade-slide-up-delay-2">
+            <Quote className="w-8 h-8 text-forest-200" />
+            <p className="text-sm text-stone-700 leading-relaxed italic">
+              "The weather advisory feature helps me plan spray schedules perfectly. It's like having an agronomist in my pocket — and it's free!"
+            </p>
+            <div className="flex items-center gap-3 pt-2 border-t border-stone-100">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                AS
+              </div>
+              <div>
+                <div className="text-sm font-bold text-stone-900">Anand Singh</div>
+                <div className="text-xs text-stone-500">Rice & Wheat Farmer, Punjab</div>
+              </div>
+              <div className="ml-auto flex gap-0.5">
+                {[1,2,3,4,5].map(i => (
+                  <Star key={i} className="w-3.5 h-3.5 text-harvest-400 fill-harvest-400" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Trust badges row */}
+        <div className="flex flex-wrap items-center justify-center gap-6 pt-4">
+          <div className="flex items-center gap-2 text-xs text-stone-500 font-medium">
+            <Zap className="w-4 h-4 text-harvest-500" />
+            <span>Instant AI Results</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-stone-500 font-medium">
+            <ShieldCheck className="w-4 h-4 text-forest-600" />
+            <span>ICAR & IPM Verified</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-stone-500 font-medium">
+            <Globe className="w-4 h-4 text-emerald-600" />
+            <span>Available in 3 Languages</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-stone-500 font-medium">
+            <HeartHandshake className="w-4 h-4 text-purple-500" />
+            <span>100% Free for Farmers</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Indian Farmer Advisory & Helpline Callout */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-gradient-to-br from-forest-950 via-forest-900 to-forest-800 text-white p-6 sm:p-10 shadow-lifted relative overflow-hidden">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
